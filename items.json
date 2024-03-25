@@ -1,0 +1,34 @@
+[
+    {
+        "code": "4889",
+        "shortName": "frs-cltro",
+        "name": "Cilantro",
+        "price": 1.49,
+        "type": "Produce",
+        "sell_type": "Each"
+    },
+    {
+        "code": "4068",
+        "shortName": "grn-onin",
+        "name": "Green Onion",
+        "price": 1.69,
+        "type": "Produce",
+        "sell_type": "Each"
+    },
+    {
+        "code": "4011",
+        "shortName": "banana",
+        "name": "Banana",
+        "price": 0.99,
+        "type": "produce",
+        "sell_type": "Weight"
+    },
+    {
+        "code": "432",
+        "shortName": "coke-diet",
+        "name": "Diet Coke",
+        "price": 2.49,
+        "type": "Grocery",
+        "sell_type": "N/A"
+    }
+]
