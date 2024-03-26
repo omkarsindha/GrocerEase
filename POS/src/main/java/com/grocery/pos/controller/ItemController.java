@@ -30,14 +30,14 @@ public class ItemController {
     @GetMapping("/items")
     public ResponseEntity<List<Item>> getAllItems() {
         try {
-            List<Item> Items = new ArrayList<Item>();
+            List<Item> items = new ArrayList<Item>();
 
-            Items.addAll(itemRepository.findAll());
+            items.addAll(itemRepository.findAll());
 
-            if (Items.isEmpty()) {
+            if (items.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(Items, HttpStatus.OK);
+            return new ResponseEntity<>(items, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
