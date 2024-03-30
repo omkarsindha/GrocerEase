@@ -11,10 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class KeyboardInput {
     private String code;
     private String weight;
-    private String alternatePrice;
+    private Double alternatePrice;
     private Double mfrCoupon;
-    private String itemVoid;
-    private boolean total;
-    private boolean cash;
-    private boolean debitCredit;
+    private boolean isAlternate;
+    private boolean isItemVoid;
+    private boolean isTotal;
+    private boolean isCash;
+    private boolean isDebitCredit;
 }
