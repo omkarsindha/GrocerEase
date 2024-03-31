@@ -1,6 +1,7 @@
 package com.grocery.pos.controller;
 
 
+import com.grocery.pos.Exception.CartServiceException;
 import com.grocery.pos.model.Item;
 import com.grocery.pos.model.KeyboardInput;
 import com.grocery.pos.service.CartService;
@@ -19,13 +20,13 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-    @PostMapping("/code")
-    public ResponseEntity<List<Item>> createItem(@RequestBody KeyboardInput keyboardInput) {
+    @PostMapping("/")
+    public ResponseEntity<?> createItem(@RequestBody KeyboardInput keyboardInput) {
         try {
             List<Item> cart = cartService.processKeyboardInput(keyboardInput);
             return new ResponseEntity<>(cart, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (CartServiceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

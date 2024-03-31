@@ -1,0 +1,64 @@
+[{
+  "_id": {
+    "$oid": "6609cd3a20650b1121d87bfc"
+  },
+  "supplier": "Loblaws",
+  "orderDate": {
+    "$numberLong": "1711918394587"
+  },
+  "deliveredDate": 0,
+  "isDelivered": false,
+  "itemCode": "060383759384",
+  "sellType": "each",
+  "Quantity": 50,
+  "price": 2,
+  "_class": "com.grocery.inventory.model.Order"
+},
+{
+  "_id": {
+    "$oid": "6609cd5c20650b1121d87bfd"
+  },
+  "supplier": "Farmers Market",
+  "orderDate": {
+    "$numberLong": "1711918428763"
+  },
+  "deliveredDate": 0,
+  "isDelivered": false,
+  "itemCode": "4889",
+  "sellType": "each",
+  "Quantity": 100,
+  "price": 0.89,
+  "_class": "com.grocery.inventory.model.Order"
+},
+{
+  "_id": {
+    "$oid": "6609e8320dec9430c5683790"
+  },
+  "supplier": "Farmers Market",
+  "orderDate": {
+    "$numberLong": "1711925298549"
+  },
+  "deliveredDate": 0,
+  "isDelivered": false,
+  "itemCode": "4068",
+  "sellType": "each",
+  "Quantity": 150,
+  "price": 1,
+  "_class": "com.grocery.inventory.model.Order"
+},
+{
+  "_id": {
+    "$oid": "6609e8570dec9430c5683791"
+  },
+  "supplier": "Farmers Market",
+  "orderDate": {
+    "$numberLong": "1711925335118"
+  },
+  "deliveredDate": 0,
+  "isDelivered": false,
+  "itemCode": "4012",
+  "sellType": "weight",
+  "Quantity": 1000,
+  "price": 1.49,
+  "_class": "com.grocery.inventory.model.Order"
+}]

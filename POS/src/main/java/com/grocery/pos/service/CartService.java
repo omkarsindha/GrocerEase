@@ -25,42 +25,46 @@ public class CartService {
 
         if (keyboardInput.getCode() != null){
 
+            // process item void
             if (keyboardInput.isItemVoid()){
                 String code = keyboardInput.getCode();
-                Item item = itemRepository.findByCode(code).get(0);
+                Item item = itemRepository.findByItemCode(code);
                 if(cart.contains(item)){
                     cart.remove(item);
-                    return cart;
                 } else {
                     throw new CartServiceException("Item not in cart");
                 }
             }
 
-
+            // process alternate price
             if (keyboardInput.isAlternate()){
                 String code = keyboardInput.getCode();
-                Item item = itemRepository.findByCode(code).get(0);
+                Item item = itemRepository.findByItemCode(code);
                 item.setPrice(keyboardInput.getAlternatePrice());
                 cart.add(item);
             }
 
-
-            String code = keyboardInput.getCode();
-            Item item = itemRepository.findByCode(code).get(0);
-            cart.add(item);
-            System.out.println("hi" + item);
+            if(!keyboardInput.isAlternate() && !keyboardInput.isItemVoid()) {
+                String code = keyboardInput.getCode();
+                Item item = itemRepository.findByItemCode(code);
+                if(item == null){
+                    throw new CartServiceException("Item not found");
+                }else {
+                    cart.add(item);
+                }
+            }
         }
 
-        // total logic remaining
-        if(keyboardInput.isTotal()){
-            return cart;
-        }
-
-        // cash logic remaining
-        if (keyboardInput.isCash() || keyboardInput.isDebitCredit()){
-            // printReceipt();
-            cart = new ArrayList<Item>();
-        }
+//        // total logic remaining
+//        if(keyboardInput.isTotal()){
+//            return cart;
+//        }
+//
+//        // cash logic remaining
+//        if (keyboardInput.isCash() || keyboardInput.isDebitCredit()){
+//            // printReceipt();
+//            cart = new ArrayList<Item>();
+//        }
 
         return cart;
     }

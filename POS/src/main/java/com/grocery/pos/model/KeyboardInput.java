@@ -15,7 +15,6 @@ public class KeyboardInput {
     private Double mfrCoupon;
     private boolean isAlternate;
     private boolean isItemVoid;
-    private boolean isTotal;
     private boolean isCash;
     private boolean isDebitCredit;
 }

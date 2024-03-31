@@ -1,34 +1,84 @@
-[
-    {
-        "code": "4889",
-        "shortName": "frs-cltro",
-        "name": "Cilantro",
-        "price": 1.49,
-        "type": "Produce",
-        "sell_type": "Each"
-    },
-    {
-        "code": "4068",
-        "shortName": "grn-onin",
-        "name": "Green Onion",
-        "price": 1.69,
-        "type": "Produce",
-        "sell_type": "Each"
-    },
-    {
-        "code": "4011",
-        "shortName": "banana",
-        "name": "Banana",
-        "price": 0.99,
-        "type": "produce",
-        "sell_type": "Weight"
-    },
-    {
-        "code": "432",
-        "shortName": "coke-diet",
-        "name": "Diet Coke",
-        "price": 2.49,
-        "type": "Grocery",
-        "sell_type": "N/A"
-    }
-]
+[{
+  "_id": {
+    "$oid": "6609d508b1dc9b048da397df"
+  },
+  "itemCode": "4068",
+  "shortName": "grn-onion",
+  "name": "Green Onion",
+  "price": 1.69,
+  "type": "Produce",
+  "sellType": "each",
+  "_class": "com.grocery.inventory.model.Item"
+},
+{
+  "_id": {
+    "$oid": "6609d54db1dc9b048da397e0"
+  },
+  "itemCode": "4889",
+  "shortName": "frs-clntro",
+  "name": "Fresh Cilantro",
+  "price": 0.99,
+  "type": "Produce",
+  "sellType": "each",
+  "_class": "com.grocery.inventory.model.Item"
+},
+{
+  "_id": {
+    "$oid": "6609e6620dec9430c568378b"
+  },
+  "itemCode": "4900",
+  "shortName": "crl-parsly",
+  "name": "Curly crl-parsley",
+  "price": 1.49,
+  "type": "Produce",
+  "sellType": "each",
+  "_class": "com.grocery.inventory.model.Item"
+},
+{
+  "_id": {
+    "$oid": "6609e6cb0dec9430c568378c"
+  },
+  "itemCode": "4012",
+  "shortName": "nvl-orange",
+  "name": "Navel Orange",
+  "price": 1.99,
+  "type": "Produce",
+  "sellType": "weight",
+  "_class": "com.grocery.inventory.model.Item"
+},
+{
+  "_id": {
+    "$oid": "6609e6f90dec9430c568378d"
+  },
+  "itemCode": "4087",
+  "shortName": "roma-tmto",
+  "name": "Tomato Roma",
+  "price": 1.99,
+  "type": "Produce",
+  "sellType": "weight",
+  "_class": "com.grocery.inventory.model.Item"
+},
+{
+  "_id": {
+    "$oid": "6609e73c0dec9430c568378e"
+  },
+  "itemCode": "06038759384",
+  "shortName": "rc-water",
+  "name": "Real Canadian Water",
+  "price": 2.49,
+  "type": "Grocery",
+  "sellType": "each",
+  "_class": "com.grocery.inventory.model.Item"
+},
+{
+  "_id": {
+    "$oid": "6609e7e80dec9430c568378f"
+  },
+  "itemCode": "068274000130",
+  "shortName": "rc-water",
+  "name": "Real Canadian Water",
+  "price": 3.77,
+  "type": "Grocery",
+  "sellType": "each",
+  "_class": "com.grocery.inventory.model.Item"
+}]

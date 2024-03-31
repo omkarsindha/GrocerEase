@@ -5,17 +5,20 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-
 @Data
 @Builder
 @Document(collection = "orders")
 public class Order {
     @Id
-    private String order_id;
+    private String orderId;
     private String supplier;
-    private Item item;
-    private int Quantity;
-    private Double weight;
+    //date are in unix time stamp
+    private long orderDate;
+    private long deliveredDate;
+    private Boolean isDelivered;
+    private String itemCode;
+    private String sellType;
+    //quantity is kg if price is by weight and units if price is by each
+    private double Quantity;
     private Double price;
 }

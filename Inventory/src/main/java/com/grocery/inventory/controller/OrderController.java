@@ -1,9 +1,8 @@
 package com.grocery.inventory.controller;
 
-import com.grocery.inventory.model.Item;
-import com.grocery.inventory.model.Item;
-import com.grocery.inventory.repository.ItemRepository;
-import com.grocery.inventory.service.ItemService;
+import com.grocery.inventory.model.Order;
+import com.grocery.inventory.repository.OrderRepository;
+import com.grocery.inventory.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,33 +11,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
-@RequestMapping("/items")
-public class ItemController {
+@RequestMapping("/orders")
+public class OrderController {
 
     @Autowired
-    ItemService itemService;
+    OrderService orderService;
+
 
     @GetMapping("/")
-    public ResponseEntity<List<Item>> getAllItems() {
+    public ResponseEntity<List<Order>> getAllOrders() {
         try {
-            List<Item> items = itemService.getAllItems();
-            if (items.isEmpty()) {
+            List<Order> orders = orderService.getAllOrders();
+            if (orders.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(items, HttpStatus.OK);
+            return new ResponseEntity<>(orders, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Item> getItemByID(@PathVariable String id) {
+    public ResponseEntity<Order> getOrderByID(@PathVariable String id) {
         try {
-            Item Item = itemService.getItemByID(id);
-            if (Item != null) {
-                return new ResponseEntity<>(Item, HttpStatus.OK);
+            Order order = orderService.getOrderByID(id);
+            if (order != null) {
+                return new ResponseEntity<>(order, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -48,10 +47,10 @@ public class ItemController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Item> createItem(@RequestBody Item newItem) {
+    public ResponseEntity<Order> createOrder(@RequestBody Order newOrder) {
         try {
-            Item savedItem = itemService.save(newItem);
-            return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
+            Order savedOrder = orderService.save(newOrder);
+            return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,24 +59,24 @@ public class ItemController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteItem(@PathVariable("id") String id) {
+    public ResponseEntity<HttpStatus> deleteOrder(@PathVariable("id") String id) {
         try {
-            itemService.deleteItemByID(id);
+            orderService.deleteOrderByID(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //Delete All Items From Database
+    //Delete All Orders From Database
     @DeleteMapping("/")
-    public ResponseEntity<HttpStatus> deleteAllItems() {
+    public ResponseEntity<HttpStatus> deleteAllOrders() {
         try {
-            itemService.deleteAllItems();
+            orderService.deleteAllOrders();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-}
 
+}
