@@ -1,48 +1,44 @@
 package com.grocery.inventory.controller;
 
 import com.grocery.inventory.exception.ServiceException;
-import com.grocery.inventory.model.Item;
-import com.grocery.inventory.model.Item;
-import com.grocery.inventory.repository.ItemRepository;
-import com.grocery.inventory.service.ItemService;
+import com.grocery.inventory.model.Quantity;
+import com.grocery.inventory.service.QuantityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
-@RequestMapping("/items")
-public class ItemController {
+@RequestMapping("/quantities")
+public class QuantityController {
 
-    private final ItemService itemService;
+    private final QuantityService quantityService;
     @Autowired
-    ItemController(ItemService itemService){
-        this.itemService = itemService;
+    QuantityController(QuantityService quantityService){
+        this.quantityService = quantityService;
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Item>> getAllItems() {
+    public ResponseEntity<List<Quantity>> getAllQuantities() {
         try {
-            List<Item> items = itemService.getAllItems();
-            if (items.isEmpty()) {
+            List<Quantity> quantities = quantityService.getAllQuantities();
+            if (quantities.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(items, HttpStatus.OK);
+            return new ResponseEntity<>(quantities, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Item> getItemByID(@PathVariable String id) {
+    @GetMapping("/{itemCode}")
+    public ResponseEntity<Quantity> getQuantityByID(@PathVariable String itemCode) {
         try {
-            Item Item = itemService.getItemByID(id);
-            if (Item != null) {
-                return new ResponseEntity<>(Item, HttpStatus.OK);
+            Quantity Quantity = quantityService.getQuantityByItemCode(itemCode);
+            if (Quantity != null) {
+                return new ResponseEntity<>(Quantity, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -52,13 +48,14 @@ public class ItemController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> createItem(@RequestBody Item newItem) {
+    public ResponseEntity<?> createQuantity(@RequestBody Quantity newQuantity) {
         try {
-            Item savedItem = itemService.save(newItem);
-            return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
+            Quantity savedQuantity = quantityService.save(newQuantity);
+            return new ResponseEntity<>(savedQuantity, HttpStatus.CREATED);
         } catch (ServiceException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch (Exception e) {
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -66,24 +63,24 @@ public class ItemController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteItem(@PathVariable("id") String id) {
+    public ResponseEntity<HttpStatus> deleteQuantity(@PathVariable("id") String id) {
         try {
-            itemService.deleteItemByID(id);
+            quantityService.deleteQuantityByID(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //Delete All Items From Database
+    //Delete All Quantities From Database
     @DeleteMapping("/")
-    public ResponseEntity<HttpStatus> deleteAllItems() {
+    public ResponseEntity<HttpStatus> deleteAllQuantities() {
         try {
-            itemService.deleteAllItems();
+            quantityService.deleteAllQuantities();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
 }
-

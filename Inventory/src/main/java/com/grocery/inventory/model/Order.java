@@ -17,7 +17,7 @@ public class Order {
     private long deliveredDate;
     private Boolean isDelivered;
     private String itemCode;
-    private String sellType;
+    private String itemSellType;
     //quantity is kg if price is by weight and units if price is by each
     private double Quantity;
     private Double price;

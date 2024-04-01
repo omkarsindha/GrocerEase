@@ -10,15 +10,22 @@ import java.util.List;
 @Service
 public class OrderService {
 
-    @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    OrderService(OrderRepository orderRepository){
+        this.orderRepository = orderRepository;
+    }
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
     public Order getOrderByID(String orderId) {
-            return orderRepository.findByOrderId(orderId).get(0);
+            return orderRepository.findByOrderId(orderId);
+    }
+
+    public List<Order> getOrderByItemCode(String itemCode) {
+        return orderRepository.findByItemCode(itemCode);
     }
 
     public Order save(Order order){
