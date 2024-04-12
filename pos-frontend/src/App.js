@@ -7,13 +7,15 @@ import 'tailwindcss/tailwind.css';
 const App = () => {
 
   return (
-    <div className="app">
-      <div className="pos-container">
-        <Keyboard />
-        <Screen />
-        <Cart />
+      <div className="app flex p-4">
+          <div className="container p-2 m-2">
+              <Screen/>
+              <Keyboard/>
+          </div>
+          <div className="container p-2 m-2">
+              <Cart/>
+          </div>
       </div>
-    </div>
   );
 };
 

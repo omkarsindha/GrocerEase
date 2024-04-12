@@ -1,28 +1,66 @@
 import React from 'react';
 
-const Cart = ({ items }) => {
-  return (
-      <div className="container mx-auto px-4 py-8">
-          <div className="cart">
-              <h2 className="text-2xl font-bold mb-4">Cart</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="bg-white rounded-lg shadow-md p-6">
-                      <h3 className="text-lg font-semibold mb-2">Item by Each</h3>
-                      <p>Name: Product A</p>
-                      <p>Price: $10.00</p>
-                  </div>
-                  <div className="bg-white rounded-lg shadow-md p-6">
-                      <h3 className="text-lg font-semibold mb-2">Item by Weight</h3>
-                      <p>Name: Product B</p>
-                      <p>Price per pound: $5.00</p>
-                      <p>Weight: 2 lbs</p>
-                      <p>Total Price: $10.00</p>
-                  </div>
-              </div>
-          </div>
-      </div>
+const Cart = () => {
 
-  );
+    return (
+        <div className=" bg-gray-800 rounded-lg mt-4 overflow-hidden">
+            <div className="h-5/6 overflow-y-auto rounded-lg shadow-md p-4">
+                <div className="bg-white rounded-lg shadow-md p-3 m-3">
+                    <div className="flex">
+                        <p className="text-lg mr-4">4889</p>
+                        <p className="text-lg">Cilantro</p>
+                    </div>
+                    <p className="text-lg">$0.99</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-3 m-3">
+                    <div className="flex">
+                        <p className="text-lg mr-4">4012</p>
+                        <p className="text-lg">Navel Oranges</p>
+                    </div>
+                    <div className="flex">
+                        <p className="text-lg w-20">$1.99/lb</p>
+                        <p className="text-lg">1.324 Kg</p>
+                    </div>
+                    <p className="text-lg">$5.80</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-3 m-3">
+                    <div className="flex">
+                        <p className="text-lg mr-4">060838759384</p>
+                        <p className="text-lg">RC Water</p>
+                    </div>
+                    <p className="text-lg">$2.99</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-3 m-3">
+                    <div className="flex">
+                        <p className="text-lg mr-4">4068</p>
+                        <p className="text-lg">Green Onion</p>
+                    </div>
+                    <p className="text-lg">$1.69</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-3 m-3">
+                    <div className="flex">
+                        <p className="text-lg mr-4">4068</p>
+                        <p className="text-lg">Green Onion</p>
+                    </div>
+                    <p className="text-lg">$1.69</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-3 m-3">
+                    <div className="flex">
+                        <p className="text-lg mr-4">4068</p>
+                        <p className="text-lg">Green Onion</p>
+                    </div>
+                    <p className="text-lg">$1.69</p>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-3 m-3">
+                    <div className="flex">
+                        <p className="text-lg mr-4">4068</p>
+                        <p className="text-lg">Green Onion</p>
+                    </div>
+                    <p className="text-lg">$1.69</p>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Cart;
