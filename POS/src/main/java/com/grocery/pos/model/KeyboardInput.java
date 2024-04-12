@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@Document(collection = "items")
 public class KeyboardInput {
     private String code;
     private String weight;

@@ -8,27 +8,34 @@ const HireForm = () => {
         name: '',
         email: '',
         department:'',
-        position:''
+        position:'',
+        document: ''
     });
 
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
+            const formDataToSend = new FormData();
+            formDataToSend.append('name', formData.name);
+            formDataToSend.append('email', formData.email);
+            formDataToSend.append('department', formData.department);
+            formDataToSend.append('position', formData.position);
+            formDataToSend.append('document', e.target.elements.document.files[0]);
+    
             const response = await fetch('http://localhost:8080/employees/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                body: formDataToSend,
             });
+    
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+    
             const newEmployee = await response.json();
             console.log('Employee added successfully:', newEmployee);
             window.location.href = `/employee/${newEmployee.employeeId}`;
@@ -36,6 +43,7 @@ const HireForm = () => {
             console.error('There was a problem with the form submission:', error);
         }
     };
+    
 
     return (
         <div className="container">
@@ -70,6 +78,10 @@ const HireForm = () => {
                                         <option value="Front End">Front End</option>
                                         <option value="Back End">Back End</option>
                                     </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Upload Documnet</label>
+                                    <input class="form-control" type="file" id="document" onChange={handleChange} />
                                 </div>
                                 <div className="d-grid">
                                     <button type="submit" className="btn btn-primary btn-block w-25">Hire</button>

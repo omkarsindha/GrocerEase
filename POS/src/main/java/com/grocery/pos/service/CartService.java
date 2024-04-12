@@ -22,7 +22,6 @@ public class CartService {
 
     public List<Item> processKeyboardInput(KeyboardInput keyboardInput) throws CartServiceException{
 
-
         if (keyboardInput.getCode() != null){
 
             // process item void
