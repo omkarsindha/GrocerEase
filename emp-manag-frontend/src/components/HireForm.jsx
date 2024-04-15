@@ -1,17 +1,15 @@
-import React, {useState} from "react";
-import {redirect} from "react-router-dom";
-//import {use} from 'react-router-dom';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HireForm = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        department:'',
-        position:'',
+        department: 'frontend', // Default department
+        position: 'cashier', // Default position
         document: ''
     });
-
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -26,68 +24,63 @@ const HireForm = () => {
             formDataToSend.append('department', formData.department);
             formDataToSend.append('position', formData.position);
             formDataToSend.append('document', e.target.elements.document.files[0]);
-    
+
             const response = await fetch('http://localhost:8080/employees/', {
                 method: 'POST',
                 body: formDataToSend,
             });
-    
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-    
+
             const newEmployee = await response.json();
             console.log('Employee added successfully:', newEmployee);
-            window.location.href = `/employee/${newEmployee.employeeId}`;
+            navigate(`/employee/${newEmployee.employeeId}`);
         } catch (error) {
             console.error('There was a problem with the form submission:', error);
         }
     };
-    
 
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-6">
-                    <div className="card mt-5">
-                        <div className="card-body">
-                            <h2 className="card-title text-center mb-4">Hire Employee</h2>
-                            <form onSubmit={handleSubmit}>
-                                <div className="mb-3">
-                                    <label htmlFor="name" className="form-label">Name</label>
-                                    <input type="text" id="name" className="form-control" onChange={handleChange} value={formData.name} required/>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">Email</label>
-                                    <input type="email" id="email" className="form-control" onChange={handleChange} value={formData.email} required/>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="position" className="form-label">Select Position</label>
-                                    <select id="position" className="form-select" onChange={handleChange}
-                                            value={formData.position} required>
-                                        <option value="" selected></option>
-                                        <option value="Cashier">Cashier</option>
-                                        <option value="Override">Override</option>
-                                    </select>
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="department" className="form-label">Select Department</label>
-                                    <select id="department" className="form-select" onChange={handleChange}
-                                            value={formData.department} required>
-                                        <option value="" selected></option>
-                                        <option value="Front End">Front End</option>
-                                        <option value="Back End">Back End</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Upload Documnet</label>
-                                    <input class="form-control" type="file" id="document" onChange={handleChange} />
-                                </div>
-                                <div className="d-grid">
-                                    <button type="submit" className="btn btn-primary btn-block w-25">Hire</button>
-                                </div>
-                            </form>
-                        </div>
+        <div className="container mx-auto bg-gray-900 text-white">
+            <div className="flex justify-center">
+                <div className="max-w-md w-full py-4">
+                    <div className="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <h2 className="text-xl text-center font-bold mb-4">Hire Employee</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-4">
+                                <label htmlFor="name" className="block text-gray-300 text-sm font-bold mb-2">Name</label>
+                                <input type="text" id="name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" onChange={handleChange} value={formData.name} required />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="email" className="block text-gray-300 text-sm font-bold mb-2">Email</label>
+                                <input type="email" id="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" onChange={handleChange} value={formData.email} required />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-300 text-sm font-bold mb-2">Select Position</label>
+                                <label className="inline-flex items-center">
+                                    <input type="radio" id="position" className="form-radio text-blue-500" value="cashier" onChange={handleChange} checked={formData.position === "cashier"} />
+                                    <span className="ml-2">Cashier</span>
+                                </label>
+                                <label className="inline-flex items-center ml-6">
+                                    <input type="radio" id="position" className="form-radio text-blue-500" value="override" onChange={handleChange} checked={formData.position === "override"} />
+                                    <span className="ml-2">Override</span>
+                                </label>
+                                <label className="inline-flex items-center ml-6">
+                                    <input type="radio" id="position" className="form-radio text-blue-500" value="clerk" onChange={handleChange} checked={formData.position === "clerk"} />
+                                    <span className="ml-2">Clerk</span>
+                                </label>
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="document" className="block text-gray-300 text-sm font-bold mb-2">Upload
+                                    Document</label>
+                                <input type="file" id="document" onChange={handleChange} />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Hire</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -96,4 +89,3 @@ const HireForm = () => {
 };
 
 export default HireForm;
-

@@ -15,16 +15,18 @@ const EmployeeList = () => {
     }, []);
 
     return (
-        <div className="container text-center">
-            <h2 className="p-3 bg">Employee List</h2>
+        <div className="container mx-auto text-center bg-gray-900 text-white">
+            <h2 className="p-3 text-2xl font-bold bg-gray-800">Employee List</h2>
             {employees.map((employee) => (
-                <div className="card mb-3" style={{maxWidth: '300px', margin: '0 auto'}} key={employee.employeeId}>
-                    <div className="card-body">
-                        <h5 className="card-title">{employee.name}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">{employee.position}</h6>
-                        <p className="text">Department: {employee.department}</p>
-                        <p className="card-text">Email: {employee.email}</p>
-                        <a href={'/employee/' + employee.employeeId} className="btn btn-primary">More details</a>
+                <div className="max-w-sm rounded overflow-hidden shadow-lg mx-auto my-4 bg-gray-800" key={employee.employeeId}>
+                    <div className="px-6 py-4">
+                        <h5 className="font-bold text-xl mb-2">{employee.name}</h5>
+                        <h6 className="text-sm text-gray-400 mb-2">Position: {employee.position}</h6>
+                        <p className="text-sm text-gray-400">Department: {employee.department}</p>
+                        <p className="text-sm text-gray-400">Email: {employee.email}</p>
+                    </div>
+                    <div className="px-6 py-4">
+                        <a href={'/employee/' + employee.employeeId} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">More details</a>
                     </div>
                 </div>
             ))}

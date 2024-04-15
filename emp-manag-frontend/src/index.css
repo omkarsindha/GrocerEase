@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.body {
+    background-color: #f0f0f0; /* Replace with your desired background color */
+    /* Other background styles */
+}
