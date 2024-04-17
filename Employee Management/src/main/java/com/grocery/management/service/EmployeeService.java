@@ -1,6 +1,5 @@
 package com.grocery.management.service;
 
-
 import com.grocery.management.model.Cashier;
 import com.grocery.management.model.Employee;
 import com.grocery.management.model.User;
@@ -28,16 +27,22 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee getEmployeeByID(String employeeCode) {
-        return employeeRepository.findByEmployeeId(employeeCode);
+    public Employee getEmployeeByID(String id) {
+        return employeeRepository.findByEmployeeId(id);
     }
 
     public Employee save(Employee employee){
-        Employee newEmployee = employeeRepository.save(employee);
+
+        if(employee.getPosition().equals("Cashier") || employee.getPosition().equals("Override")){
+            employee.setDepartment("Front End");
+        }
+        else if(employee.getPosition().equals("Clerk")){
+            employee.setDepartment("Back End");
+        }
 
         if(employee.getDepartment().equals("Front End")) {
             Cashier newCashier = new Cashier();
-            newCashier.setEmployeeEmail(newEmployee.getEmail());
+            newCashier.setEmployeeEmail(employee.getEmail());
             String posId = userService.getUnusedLoginId();
             String posPass =  String.valueOf((int)(Math.random() * 9000) + 1000);
             newCashier.setPosId(posId);
@@ -52,7 +57,7 @@ public class EmployeeService {
         user.setAuthority(employee.getAuthority());
         userService.save(user);
 
-        return newEmployee;
+        return employeeRepository.save(employee);
 
     }
 

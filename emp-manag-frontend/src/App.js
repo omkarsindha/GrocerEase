@@ -3,6 +3,7 @@ import React from 'react';
 import EmployeeList from './components/EmployeeList';
 import NavBar from './components/Navbar';
 import HireForm from './components/HireForm'
+import Employee from "./components/Employee";
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './index.css';
 
@@ -16,6 +17,7 @@ function App() {
                       <Route path="/" element={<EmployeeList />} />
                       <Route path="/hire" element={<HireForm/>} />
                       <Route path="/employees" element={<EmployeeList />} />
+                      <Route path={"/employee/:id"} element={<Employee />} />
                   </Routes>
               </div>
           </Router>

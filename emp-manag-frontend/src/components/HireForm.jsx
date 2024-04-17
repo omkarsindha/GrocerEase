@@ -5,9 +5,7 @@ const HireForm = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        department: 'frontend', // Default department
-        position: 'cashier', // Default position
-        document: ''
+        position: 'Cashier'
     });
     const navigate = useNavigate();
 
@@ -15,28 +13,42 @@ const HireForm = () => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const formDataToSend = new FormData();
+    //         formDataToSend.append('name', formData.name);
+    //         formDataToSend.append('email', formData.email);
+    //         formDataToSend.append('position', formData.position);
+    //         //formDataToSend.append('document', e.target.elements.document.files[0]);
+    //
+    //         const response = await fetch('http://localhost:8080/employees/', {
+    //             method: 'POST',
+    //             body: formDataToSend
+    //         });
+    //         const newEmployee = await response.json();
+    //         console.log('Employee added successfully:', newEmployee);
+    //         navigate(`/employee/${newEmployee.employeeId}`);
+    //     } catch (error) {
+    //         console.error('There was a problem with the form submission:', error);
+    //     }
+    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const formDataToSend = new FormData();
-            formDataToSend.append('name', formData.name);
-            formDataToSend.append('email', formData.email);
-            formDataToSend.append('department', formData.department);
-            formDataToSend.append('position', formData.position);
-            formDataToSend.append('document', e.target.elements.document.files[0]);
-
             const response = await fetch('http://localhost:8080/employees/', {
                 method: 'POST',
-                body: formDataToSend,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
-
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
             const newEmployee = await response.json();
             console.log('Employee added successfully:', newEmployee);
-            navigate(`/employee/${newEmployee.employeeId}`);
+            window.location.href = `/employee/${newEmployee.employeeId}`;
         } catch (error) {
             console.error('There was a problem with the form submission:', error);
         }
@@ -60,15 +72,15 @@ const HireForm = () => {
                             <div className="mb-4">
                                 <label className="block text-gray-300 text-sm font-bold mb-2">Select Position</label>
                                 <label className="inline-flex items-center">
-                                    <input type="radio" id="position" className="form-radio text-blue-500" value="cashier" onChange={handleChange} checked={formData.position === "cashier"} />
+                                    <input type="radio" id="position" className="form-radio" value="Cashier" onChange={handleChange} checked={formData.position === "cashier"} />
                                     <span className="ml-2">Cashier</span>
                                 </label>
                                 <label className="inline-flex items-center ml-6">
-                                    <input type="radio" id="position" className="form-radio text-blue-500" value="override" onChange={handleChange} checked={formData.position === "override"} />
+                                    <input type="radio" id="position" className="form-radio" value="Override" onChange={handleChange} checked={formData.position === "override"} />
                                     <span className="ml-2">Override</span>
                                 </label>
                                 <label className="inline-flex items-center ml-6">
-                                    <input type="radio" id="position" className="form-radio text-blue-500" value="clerk" onChange={handleChange} checked={formData.position === "clerk"} />
+                                    <input type="radio" id="position" className="form-radio" value="Clerk" onChange={handleChange} checked={formData.position === "clerk"} />
                                     <span className="ml-2">Clerk</span>
                                 </label>
                             </div>
