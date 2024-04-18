@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CashierRepository extends MongoRepository<Cashier,String> {
 
-    Cashier findByCashierId(String cashierCode);
+    Cashier findByEmployeeId(String employeeId);
 }

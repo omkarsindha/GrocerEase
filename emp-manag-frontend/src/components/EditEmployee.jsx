@@ -8,15 +8,15 @@ const EditForm = () => {
         email: '',
         position: ''
     });
-    const { employeeId } = useParams();
+    const { id } = useParams();
 
     useEffect(() => {
         fetchEmployeeDetails();
-    }, [employeeId]);
+    }, [id]);
 
     const fetchEmployeeDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/employees/${employeeId}`);
+            const response = await axios.get(`http://localhost:8080/employees/${id}`);
             const { name, email, position } = response.data;
             setFormData({ name, email, position });
         } catch (error) {
@@ -31,7 +31,7 @@ const EditForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:8080/employees/${employeeId}`, formData);
+            const response = await axios.put(`http://localhost:8080/employees/${id}`, formData);
             console.log('Employee details updated successfully:', response.data);
         } catch (error) {
             console.error('There was a problem with updating employee details:', error);
@@ -47,11 +47,11 @@ const EditForm = () => {
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4">
                                 <label htmlFor="name" className="block text-gray-300 text-sm font-bold mb-2">Name</label>
-                                <input type="text" id="name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" onChange={handleChange} value={formData.name} required />
+                                <input type="text" id="name" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" onChange={handleChange} value={formData.name} required />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="email" className="block text-gray-300 text-sm font-bold mb-2">Email</label>
-                                <input type="email" id="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" onChange={handleChange} value={formData.email} required />
+                                <input type="email" id="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline bg-gray-600" onChange={handleChange} value={formData.email} required />
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-300 text-sm font-bold mb-2">Select Position</label>

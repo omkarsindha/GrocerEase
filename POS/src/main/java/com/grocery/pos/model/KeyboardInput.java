@@ -9,9 +9,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class KeyboardInput {
     private String code;
-    private String weight;
+    private Double weight;
     private Double alternatePrice;
     private Double mfrCoupon;
+    private boolean isMfrCoupon;
     private boolean isAlternate;
     private boolean isItemVoid;
     private boolean isCash;

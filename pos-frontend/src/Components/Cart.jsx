@@ -1,10 +1,10 @@
 import React from 'react';
-
+import './cart-style.css'
 const Cart = () => {
 
     return (
-        <div className=" bg-gray-800 rounded-lg mt-4 overflow-hidden">
-            <div className="h-5/6 overflow-y-auto rounded-lg shadow-md p-4">
+        <div className="bg-gray-800 rounded-lg mt-4 overflow-hidden">
+            <div className="cart overflow-y-auto rounded-lg shadow-md p-3">
                 <div className="bg-white rounded-lg shadow-md p-3 m-3">
                     <div className="flex">
                         <p className="text-lg mr-4">4889</p>
@@ -58,9 +58,18 @@ const Cart = () => {
                     </div>
                     <p className="text-lg">$1.69</p>
                 </div>
+                <div className="bg-white rounded-lg shadow-md p-3 m-3">
+                    <div className="flex">
+                        <p className="text-lg mr-4">4068</p>
+                        <p className="text-lg">Green Onion</p>
+                    </div>
+                    <p className="text-lg">$1.69</p>
+                </div>
             </div>
         </div>
     );
 };
 
 export default Cart;
+
+

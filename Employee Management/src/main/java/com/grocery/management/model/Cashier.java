@@ -8,8 +8,7 @@ import org.springframework.data.mongodb.core.annotation.Collation;
 @Collation("cashiers")
 public class Cashier {
     @Id
-    private String cashierId;
-    private String employeeEmail;
+    private String employeeId;
     private String posId;
     private String posPass;
     private String authority;

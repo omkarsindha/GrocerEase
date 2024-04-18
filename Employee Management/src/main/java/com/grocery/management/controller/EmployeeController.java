@@ -1,6 +1,5 @@
 package com.grocery.management.controller;
 
-import com.grocery.management.Exception.ServiceException;
 import com.grocery.management.model.Employee;
 import com.grocery.management.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employees")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST})
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 public class EmployeeController {
-
     private final EmployeeService employeeService;
     @Autowired
     EmployeeController(EmployeeService employeeService){
@@ -53,6 +51,15 @@ public class EmployeeController {
         try {
             return new ResponseEntity<>(employeeService.save(newEmployee), HttpStatus.CREATED);
        }catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEmployee(@PathVariable("id") String id, @RequestBody Employee existingEmployee) {
+        try {
+            return new ResponseEntity<>(employeeService.update(id, existingEmployee), HttpStatus.CREATED);
+        }catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

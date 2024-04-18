@@ -25,7 +25,7 @@ const EmployeeList = () => {
                         <div className="px-6 py-4">
                             <h5 className="font-bold text-xl mb-2">{employee.name}</h5>
                             <h6 className="text-sm text-gray-400 mb-2">Position: {employee.position}</h6>
-                            <p className="text-sm text-gray-400">Department: {employee.department}</p>
+                            <p className="text-sm text-gray-400 mb-2">Department: {employee.department}</p>
                             <p className="text-sm text-gray-400">Email: {employee.email}</p>
                         </div>
                         <div className="px-6 py-4">

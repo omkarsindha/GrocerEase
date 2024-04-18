@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cashiers")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 public class CashierController {
     private final CashierService cashierService;
     @Autowired

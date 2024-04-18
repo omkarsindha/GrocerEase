@@ -20,8 +20,8 @@ public class CashierService {
         return CashierRepository.findAll();
     }
 
-    public Cashier getCashierByID(String CashierCode) {
-        return CashierRepository.findByCashierId(CashierCode);
+    public Cashier getCashierByID(String employeeId) {
+        return CashierRepository.findByEmployeeId(employeeId);
     }
 
     public Cashier save(Cashier cashier){
@@ -42,7 +42,7 @@ public class CashierService {
         int randomNumber = rand.nextInt(900) + 100;
         List<Cashier> cashiers = getAllCashiers();
         for (Cashier cashier : cashiers) {
-            if (cashier.getCashierId().equals(String.valueOf(randomNumber))) {
+            if (cashier.getEmployeeId().equals(String.valueOf(randomNumber))) {
                 return getUnusedLoginId();
             }
         }
