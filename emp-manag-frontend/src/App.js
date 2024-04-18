@@ -6,6 +6,7 @@ import HireForm from './components/HireForm'
 import Employee from "./components/Employee";
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './index.css';
+import EditForm from "./components/EditEmployee";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                       <Route path="/hire" element={<HireForm/>} />
                       <Route path="/employees" element={<EmployeeList />} />
                       <Route path={"/employee/:id"} element={<Employee />} />
+                      <Route path={"/employee/:id/edit"} element={<EditForm />} />
                   </Routes>
               </div>
           </Router>

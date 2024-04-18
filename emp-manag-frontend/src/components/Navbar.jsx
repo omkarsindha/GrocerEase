@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
-
 import logo from '../images/grocerease_nav.png';
 
 const Navbar = () => {
-    // Load active item from localStorage, default to 'employee' if not set
     const [activeItem, setActiveItem] = useState(localStorage.getItem('activeItem') || 'employee');
 
     useEffect(() => {
-        // Save active item to localStorage whenever it changes
         localStorage.setItem('activeItem', activeItem);
     }, [activeItem]);
 
