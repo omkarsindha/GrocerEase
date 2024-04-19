@@ -1,61 +1,131 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Keyboard = () => {
+const Keyboard = ({addToCart}) => {
 
-    const [cart, setCart] = useState({
-        cart: []
+    const [screen, setScreen] = useState({
+        screenText: '',
+        input: '',
+        error: '',
+        product: '',
+        state: ''
     });
+
     const [keyboardInput, setKeyboardInput] = useState({
-        number: ''
+        number: '',
+        weight: '',
+        isWeight: false,
+        itemVoid: '',
+        isItemVoid: false,
+        alternatePrice: '',
+        isAlternate: false,
     });
 
-    const handleTotal = () => {};
-    const handleDebitCredit = () => {};
-    const handleCash = () => {};
+
+    const handleScreenState = () => {
+        switch (screen.state) {
+            case 'input':
+                setScreen(prevState => ({
+                    ...prevState,
+                    input: keyboardInput.itemVoid + keyboardInput.weight + keyboardInput.alternatePrice + keyboardInput.number,
+                    screenText: keyboardInput.itemVoid + keyboardInput.weight + keyboardInput.alternatePrice + keyboardInput.number
+                }));
+                break;
+            case 'error':
+                setScreen(prevState => ({
+                    ...prevState,
+                    screenText: screen.error
+                }));
+                break;
+            case 'product':
+                setScreen(prevState => ({
+                    ...prevState,
+                    screenText: screen.product
+                }));
+                break;
+            default:
+                break;
+        }
+    };
+
+
+
+    const handleWeight = () => {
+        setKeyboardInput(prevState => ({
+            ...prevState,
+            weight: ' w'+prevState.number,
+            isWeight: true,
+            number: ''
+        }))
+        setScreen(prevState => ({
+            ...prevState,
+            state: 'input'
+        }))
+        handleScreenState();
+        console.log(keyboardInput.number);
+        console.log(keyboardInput.input);
+    };
+
+    const handleNumericButtonClick = (value) => {
+        setKeyboardInput(prevState => ({
+            ...prevState,
+            number: prevState.number + value,
+        }));
+        setScreen(prevState => ({
+            ...prevState,
+            state: 'input'
+        }));
+        handleScreenState();
+        console.log(keyboardInput.number);
+        console.log(keyboardInput.input);
+    };
+
     const handleCode = () => {
         axios.get(`http://localhost:8081/item/${keyboardInput.number}`)
             .then(response => {
-                setCart(prevState => ({
-                    ...prevState,
-                    cart: [...prevState.cart, response.data]
-                }));
+                addToCart(response.data);
                 setKeyboardInput(prevState => ({
                     ...prevState,
-                    number: prevState.number = response.data.shortName + " $" + response.data.price
+                    product: prevState.product = response.data.shortName + " $" + response.data.price,
+                    screenState: 'product'
                 }));
+                console.log(response.data);
             })
             .catch(error => {
                 console.error("Error fetching item:", error);
-            });
-    };
+            });};
 
-    const handleAltPrice = () => {};
-    const handleVoid = () => {};
-    const handleWeight = () => {};
-    const handleMfrCoupon = () => {};
-    const handleEnter = () => {};
     const handleBackspace = () => {
         setKeyboardInput(prevState => ({
             ...prevState,
             number: prevState.number.slice(0, -1)
         }));
     };
+
     const handleClear = () => {
         setKeyboardInput(prevState => ({
             ...prevState,
-            number: prevState.number = ''
+            number: ''
+        }));
+        setScreen(prevState => ({
+            ...prevState,
+            input: '',
+            screenText: ''
         }));
     };
-    const handleNumericButtonClick = (value) => { setKeyboardInput(prevState => ({
-        ...prevState,
-        number: prevState.number + value
-    }));};
+
+    const handleAltPrice = () =>  {};
+    const handleVoid = () => {};
+    const handleMfrCoupon = () => {};
+    const handleEnter = () => {};
+    const handleTotal = () => {};
+    const handleDebitCredit = () => {};
+    const handleCash = () => {};
 
     return (
         <>
             <div className="bg-gray-800 text-white p-4 mt-4 rounded-lg">
-                <p className="text-3xl h-8">{keyboardInput.number}</p>
+                <p className="text-3xl h-8">{screen.screenText}</p>
             </div>
             <div className="grid grid-cols-6 grid-rows-5 gap-2 m-4 mx-18">
                 <button className="bg-blue-400 text-gray-800 font-bold py-2 px-4 rounded-3xl col-span-2" onClick={handleTotal}>Total</button>
