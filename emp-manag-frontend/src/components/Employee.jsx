@@ -5,8 +5,12 @@ import axios from 'axios';
 const Employee = () => {
     const [employeeData, setEmployeeData] = useState({
         employee: {},
-        cashier: {},
-        showPOSLogin: false,
+        showPOSLogin: false
+    });
+
+    const [cashier, setCashier] = useState({
+        posId: '',
+        posPass: ''
     });
 
     const { id } = useParams();
@@ -17,17 +21,26 @@ const Employee = () => {
             .then(response => {
                 const updatedData = {
                     employee: response.data,
-                    cashier: {},
                     showPOSLogin: response.data.department?.toLowerCase() === 'front end',
                 };
                 setEmployeeData(updatedData);
+
+                if(updatedData.showPOSLogin){
+                    axios.get(`http://localhost:8080/cashiers/${id}`)
+                    .then(response => {
+                        setCashier(response.data)
+                    })
+
+                }
+
             })
             .catch(error => {
                 console.error('Error fetching employee:', error);
             });
+
     }, [id]);
 
-    const { employee, cashier, showPOSLogin } = employeeData;
+    const { employee, showPOSLogin } = employeeData;
 
     const handleEditClick = () => {
         navigate(`/employee/${id}/edit`);
@@ -52,7 +65,6 @@ const Employee = () => {
                         <li className="mb-2"><span className="font-semibold">Email:</span> {employee.email}</li>
                         <li className="mb-2"><span className="font-semibold">Position:</span> {employee.position}</li>
                         <li className="mb-2"><span className="font-semibold">Department:</span> {employee.department}</li>
-                        <li className="mb-2"><span className="font-semibold">True: </span> {showPOSLogin}</li>
                     </ul>
                     <div className="flex justify-end">
                         <button
@@ -68,7 +80,7 @@ const Employee = () => {
                     </div>
                 </div>
             </div>
-                        {showPOSLogin && ( // Conditionally render POS Login details
+                        {showPOSLogin && (
                 <div className="mt-4 max-w-md mx-auto bg-gray-100 dark:bg-gray-700 shadow-lg rounded-lg overflow-hidden">
                     <div className="px-4 py-2">
                         <h1 className="text-3xl font-bold mb-4">POS Login Details</h1>
