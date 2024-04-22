@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import cart from "./Cart";
 
 const Keyboard = ({addToCart}) => {
 
@@ -21,14 +22,26 @@ const Keyboard = ({addToCart}) => {
         isAlternate: false,
     });
 
-
-    const handleScreenState = () => {
+    useEffect(() => {
+        console.log(screen)
         switch (screen.state) {
             case 'input':
+                let alternateText = ''
+                let weightText = ''
+                let voidText = ''
+                if(keyboardInput.isAlternate){
+                    alternateText = ' a'+keyboardInput.alternatePrice+ ' '
+                }
+                if(keyboardInput.isWeight){
+                    weightText = ' w'+keyboardInput.weight+ ' '
+                }
+                if (keyboardInput.isItemVoid){
+                    voidText = 'v '
+                }
                 setScreen(prevState => ({
                     ...prevState,
-                    input: keyboardInput.itemVoid + keyboardInput.weight + keyboardInput.alternatePrice + keyboardInput.number,
-                    screenText: keyboardInput.itemVoid + keyboardInput.weight + keyboardInput.alternatePrice + keyboardInput.number
+                    input: voidText + weightText + alternateText + keyboardInput.number,
+                    screenText: voidText + weightText + alternateText + keyboardInput.number
                 }));
                 break;
             case 'error':
@@ -46,14 +59,12 @@ const Keyboard = ({addToCart}) => {
             default:
                 break;
         }
-    };
-
-
+    }, [screen.state, screen.product, screen.error, keyboardInput.itemVoid, keyboardInput.weight, keyboardInput.alternatePrice, keyboardInput.number]);
 
     const handleWeight = () => {
         setKeyboardInput(prevState => ({
             ...prevState,
-            weight: ' w'+prevState.number,
+            weight: (parseFloat(prevState.number) / 1000).toFixed(3),
             isWeight: true,
             number: ''
         }))
@@ -61,9 +72,32 @@ const Keyboard = ({addToCart}) => {
             ...prevState,
             state: 'input'
         }))
-        handleScreenState();
-        console.log(keyboardInput.number);
-        console.log(keyboardInput.input);
+    };
+
+    const handleAltPrice = () =>  {
+        setKeyboardInput(prevState => ({
+            ...prevState,
+            alternatePrice: (parseFloat(prevState.number) / 100).toFixed(2),
+            isAlternate: true,
+            number: ''
+        }))
+        setScreen(prevState => ({
+            ...prevState,
+            state: 'input'
+        }))
+    };
+
+    const handleVoid = () => {
+        setKeyboardInput(prevState => ({
+            ...prevState,
+            itemVoid: ' v ',
+            isItemVoid: true,
+            number: ''
+        }))
+        setScreen(prevState => ({
+            ...prevState,
+            state: 'input'
+        }))
     };
 
     const handleNumericButtonClick = (value) => {
@@ -75,25 +109,57 @@ const Keyboard = ({addToCart}) => {
             ...prevState,
             state: 'input'
         }));
-        handleScreenState();
-        console.log(keyboardInput.number);
-        console.log(keyboardInput.input);
     };
 
     const handleCode = () => {
-        axios.get(`http://localhost:8081/item/${keyboardInput.number}`)
-            .then(response => {
-                addToCart(response.data);
-                setKeyboardInput(prevState => ({
+        let cartItem = {}
+            axios.get(`http://localhost:8081/item/${keyboardInput.number}`)
+                .then(response => {
+                    cartItem.itemCode = response.data.itemCode;
+
+                    //checking if the item price is alternated
+                    if(keyboardInput.isAlternate){
+                        cartItem.price = keyboardInput.alternatePrice
+                    }else{
+                        cartItem.price = response.data.price;
+                    }
+                    //checking if item is weighted
+                    if(response.data.sellType === "weight"){
+                        if(!keyboardInput.isWeight){
+                            console.log("hi")
+                            setScreen(prevState => ({
+                                ...prevState,
+                                state: 'error',
+                                error: 'no weight'
+                            }));
+                            resetKeyboardToDefault()
+                            return
+                        }
+                        else{
+                            cartItem.weight = keyboardInput.weight
+                            cartItem.sellPrice = (cartItem.price * cartItem.weight).toFixed(2);
+                        }
+                    }else{
+                        cartItem.weight = 'NA'
+                        cartItem.sellPrice = cartItem.price
+                    }
+                    cartItem.name = response.data.name
+
+                    addToCart(cartItem);
+                    resetKeyboardToDefault()
+                    setScreen(prevState => ({
+                        ...prevState,
+                        state: 'product',
+                        product: prevState.product = response.data.shortName + ' $' + cartItem.sellPrice,
+                    }));
+                }).catch(error => {
+                setScreen(prevState => ({
                     ...prevState,
-                    product: prevState.product = response.data.shortName + " $" + response.data.price,
-                    screenState: 'product'
+                    state: 'error',
+                    error: 'Item not found'
                 }));
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error("Error fetching item:", error);
-            });};
+            });
+    };
 
     const handleBackspace = () => {
         setKeyboardInput(prevState => ({
@@ -103,19 +169,23 @@ const Keyboard = ({addToCart}) => {
     };
 
     const handleClear = () => {
-        setKeyboardInput(prevState => ({
-            ...prevState,
-            number: ''
-        }));
-        setScreen(prevState => ({
-            ...prevState,
-            input: '',
-            screenText: ''
-        }));
+        resetKeyboardToDefault()
     };
 
-    const handleAltPrice = () =>  {};
-    const handleVoid = () => {};
+    const resetKeyboardToDefault = () => {
+        setKeyboardInput({
+            number: '',
+            weight: '',
+            isWeight: false,
+            itemVoid: '',
+            isItemVoid: false,
+            alternatePrice: '',
+            isAlternate: false,
+        })
+    }
+
+
+
     const handleMfrCoupon = () => {};
     const handleEnter = () => {};
     const handleTotal = () => {};
